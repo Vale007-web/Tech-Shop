@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %}Product Info{% endblock %}
+{% block content %}
+
+
+<div class="container product-info-wrapper">
+    <!-- Colonna SX: Immagine -->
+    <div class="product-image-container">
+        {% if product.image %}
+        <img src="{{product.image.url}}" alt="{{product.name}}">
+        {% endif %}
+    </div>
+
+    <!-- Colonna DX: Informazioni -->
+    <div class="product-info-container">
+        <h1 class="product-info-name">{{product.name}}</h1>
+
+        <div class="product-info-description">
+            <h3>Descrizione</h3>
+            <p>{{product.description}}</p><br>
+        </div>
+
+        <div class="product-info-specs">
+            <br>
+            <h3>Specifiche:</h3><br>
+            <p>{{product.specs}}</p><br>
+        </div>
+
+        <div class="product-info-price">
+            € {{product.price}}
+        </div>
+
+        <div class="product-info-availability">
+            <p>Disponibilità: <br>
+                {% if product.availability == 0 %}
+                <span style="color: red">
+                    Esaurito
+                </span>
+                {% elif product.availability < 10 %} <span style="color: #db9200">
+                    Affrettati, ultimi {{ product.availability }} pezzi rimasti!
+                    </span>
+                    {% else %}
+                    <span style="color: #009316;">
+                        {{ product.availability }} pezzi
+                    </span>
+                    {% endif %}
+            </p>
+        </div>
+        <div class="product-info-actions">
+            {% if product.availability != 0 %}
+            <form action="{% url 'add_to_cart' product.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn-add-cart">
+                    Aggiungi al carrello
+                </button>
+            </form>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
