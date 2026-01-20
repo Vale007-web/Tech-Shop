@@ -5,6 +5,8 @@ Progetto: realizzazione di un e-commerce, sviluppato con Python e Django.
 ## Descrizione del progetto
 Applicazione web per la vendita online di prodotti, con catalogo, filtri di ricerca, ordinamento e gestione del carrello e degli ordini.
 
+L'e-commerce che ho realizzato si presenta in tutte le pagine con una
+
 ## Tecnologie utilizzate
 - Python
 - Django
