@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+  <div class="main-grid">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-list">
+        <a href="/" class="sidebar-item {% if not request.GET.category %}active{% endif %}">All Products</a>
+        {% for category in category %}
+        <a href="/?category={{category.id}}"
+          class="sidebar-item {% if request.GET.category == category.id|stringformat:'i' %}active{% endif %}">
+          {{category.name}}
+        </a>
+        {% endfor %}
+      </div>
+
+      <div class="sorting-row">
+        <div class="sort-controls">
+          <label for="sort-select">Ordina per:</label>
+          <select id="sort-select" onchange="location = this.value;">
+            <option>Seleziona ordinamento</option>          
+            <option
+              value="?{% if request.GET.category %}category={{request.GET.category}}&{% endif %}{% if request.GET.query %}query={{request.GET.query}}&{% endif %}sort=name_asc"
+              {% if request.GET.sort == 'name_asc' %}selected{% endif %}>Nome (A-Z)</option>
+            <option
+              value="?{% if request.GET.category %}category={{request.GET.category}}&{% endif %}{% if request.GET.query %}query={{request.GET.query}}&{% endif %}sort=name_desc"
+              {% if request.GET.sort == 'name_desc' %}selected{% endif %}>Nome (Z-A)</option>
+            <option
+              value="?{% if request.GET.category %}category={{request.GET.category}}&{% endif %}{% if request.GET.query %}query={{request.GET.query}}&{% endif %}sort=price_asc"
+              {% if request.GET.sort == 'price_asc' %}selected{% endif %}>Prezzo (Crescente)</option>
+            <option
+              value="?{% if request.GET.category %}category={{request.GET.category}}&{% endif %}{% if request.GET.query %}query={{request.GET.query}}&{% endif %}sort=price_desc"
+              {% if request.GET.sort == 'price_desc' %}selected{% endif %}>Prezzo (Decrescente)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="content">
+      <div class="product-grid">
+        {% if product %}
+        {% for product in product %}
+        <div class="card">
+          <a href="{% url 'product-info' product.id %}">
+            <div class="item"><img src="{{product.image.url}}" class="card-img-top" alt="{{product.name}}" /></div>
+          </a>
+          <div class="card-body">
+            <h4 class="card-text_title">{{product.name}}</h4>
+            <p class="card-text_description">{{product.description|truncatechars:60}}</p> {% comment %} |slice:":30"
+            standard senza puntini {% endcomment %}
+            <p class="card-text_price">
+              {% if product.availability == 0 %}
+              <span style="color: red">Esaurito</span>
+              {% else %}
+              € {{product.price}}
+              {% endif %}
+            </p>
+          </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="col-12 w-100">
+          <div class="alert alert-info text-center" style="width: 100%; grid-column: 1 / -1;">
+            Nessun prodotto è inerente alla ricerca effettuata.
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

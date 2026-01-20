@@ -1,0 +1,951 @@
+/* Rimuove eventuali spazi aggiuntivi da tutti gli elementi */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #0d7c6f;
+    min-height: 100vh;
+    background-image: linear-gradient(0deg, #0d7c6f 30%, #07473f 100%);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+/* serve a fare occupare tutto lo spazio disponibile al contenuto principale,
+ovvero i prodotti (nella pagina prodotti) ad esempio, per far scendere il footer */
+.main-content {
+    flex: 1;
+}
+
+/* Container degli elementi del file home.html */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+
+/* stili comuni a più elementi */
+:root {
+    --primary-color: #12a998;
+    --secondary-color: #2C3E50;
+    --full_badge-color: #E74C3C;
+    --empty_badge-color: #00961b;
+    --card-bg: #FFFFFF;
+    --text-color: #333333;
+    --text-light: #7F8C8D;
+    --border-color: #E0E0E0;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    --radius: 8px;
+    --transition: all 0.3s ease;
+}
+
+
+
+/* NAVBAR */
+
+/* navbar */
+.navbar {
+    background-color: #12a998;
+    padding: 1rem 0;
+    box-shadow: var(--shadow);
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* allineamento elementi navbar e container */
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* stile nome negozio accanto al logo */
+.nav-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+}
+
+/* stile menu nella navbar */
+.nav-menu {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    gap: 30px;
+}
+
+/* stile link nella navbar */
+.nav-link {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    color: white;
+    opacity: 1;
+}
+
+/* stile badge numero elementi carrello */
+.badge {
+    background-color: var(--full_badge-color);
+    color: white;
+    padding: 0.25em 0.6em;
+    font-size: 0.75em;
+    font-weight: 700;
+    border-radius: 10rem;
+    vertical-align: super;
+}
+
+.badge-blue {
+    background-color: var(--empty_badge-color);
+}
+
+
+
+/* CORPO */
+
+/* griglia prodotti e lista categorie */
+.main-grid {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+/* griglia prodotti */
+.sorting-row {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    background: var(--card-bg);
+    padding: 15px 20px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.sort-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+}
+
+.sort-controls label {
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: var(--secondary-color);
+    white-space: nowrap;
+}
+
+.sort-controls select {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border-color);
+    background-color: white;
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 0.95rem;
+    outline: none;
+    transition: var(--transition);
+}
+
+.sort-controls select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(18, 169, 152, 0.1);
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* cards prodotti */
+.card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: var(--transition);
+    border: 1px solid var(--border-color);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-text_title {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: var(--secondary-color);
+}
+
+.card-text_description,
+.card-text_specs {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: var(--secondary-color);
+}
+
+.card-text_price {
+    color: var(--primary-color);
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+/* barra laterale delle categorie */
+@media (min-width: 993px) {
+    .sidebar {
+        position: sticky;
+        top: 100px;
+        /* Altezza della navbar + un po' di margine */
+        align-self: start;
+        height: fit-content;
+    }
+}
+
+/* barra laterale delle categorie, singoli elementi */
+.sidebar-list {
+    display: flex;
+    flex-direction: column;
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.sidebar-item {
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-color);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.sidebar-item:last-child {
+    /* evita bordo aggiuntivo alla fine */
+    border-bottom: none;
+}
+
+.sidebar-item:hover {
+    background-color: var(--background-color);
+    color: var(--primary-color);
+}
+
+.sidebar-item.active {
+    background-color: #ffc107;
+    color: #212529;
+    font-weight: bold;
+}
+
+
+
+
+
+/* CSS ANCORA ANCORA DA RIORGANIZZARE */
+
+/* Forms & Auth */
+.auth-container {
+    max-width: 500px;
+    margin: 50px auto;
+}
+
+.card-header {
+    padding: 15px 20px;
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: bold;
+}
+
+.card-header.register-header {
+    background-color: #27ae60;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="search"] {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+input:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+}
+
+.btn {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: var(--radius);
+    transition: var(--transition);
+    cursor: pointer;
+    width: 100%;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: #357ABD;
+    border-color: #357ABD;
+}
+
+.btn-success {
+    color: #fff;
+    background-color: #27ae60;
+    border-color: #27ae60;
+}
+
+.btn-success:hover {
+    background-color: #219150;
+    border-color: #219150;
+}
+
+.btn-warning {
+    color: #212529;
+    background-color: #ffc107;
+    border-color: #ffc107;
+    width: auto;
+}
+
+.search-form {
+    display: flex;
+    gap: 10px;
+}
+
+/* Responsiveness */
+@media (max-width: 992px) {
+    .main-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-toggle {
+        display: block;
+    }
+
+    .nav-menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        background-color: var(--primary-color);
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-menu.active {
+        display: flex;
+    }
+
+    .app-nav .container {
+        flex-wrap: wrap;
+    }
+}
+
+
+
+/* PAGINA PRODUCT INFO */
+.product-info-wrapper {
+    display: flex;
+    gap: 40px;
+    margin-top: 30px;
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.product-image-container {
+    flex: 0 0 400px;
+    /* Fixed width for image container */
+}
+
+.product-image-container img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    object-fit: cover;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height: 400px;
+    object-fit: cover;
+}
+
+.product-info-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.product-info-name {
+    font-size: 2rem;
+    color: var(--secondary-color);
+    margin-bottom: 10px;
+}
+
+.product-info-description,
+.card-text_specs {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    line-height: 1.6;
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: var(--radius);
+    border-left: 4px solid var(--primary-color);
+}
+
+.product-info-availability {
+    font-size: 1.1rem;
+    color: var(--secondary-color);
+    font-weight: 600;
+}
+
+.product-info-price {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.product-info-actions {
+    margin-top: 20px;
+}
+
+.btn-add-cart {
+    background-color: var(--full_badge-color);
+    color: white;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: var(--transition);
+    max-width: 300px;
+}
+
+.btn-add-cart:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 992px) {
+    .product-info-wrapper {
+        flex-direction: column;
+        margin: 10px;
+    }
+
+    .product-image-container {
+        flex: 0 0 auto;
+        width: 100%;
+    }
+}
+
+
+
+/* FOOTER */
+footer {
+    background-color: var(--secondary-color);
+    color: white;
+    padding-top: 50px;
+    margin-top: 50px;
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 20px;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 250px;
+    margin-bottom: 20px;
+}
+
+.footer-section h3 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+.footer-section p {
+    line-height: 1.5;
+    color: #bdc3c7;
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+    color: #bdc3c7;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.footer-section ul li a:hover {
+    color: white;
+    padding-left: 5px;
+}
+
+.footer-bottom {
+    background-color: #1a252f;
+    /* Darker shade of secondary */
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 30px;
+    color: #7f8c8d;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+    }
+}
+
+/* PAGINA CARRELLO */
+.cart-wrapper {
+    margin: 30px auto;
+    background-color: #ffffff !important;
+    padding: 30px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 50px;
+}
+
+.cart-title {
+    font-size: 2rem;
+    color: var(--secondary-color);
+    margin-bottom: 25px;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 10px;
+}
+
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+    background-color: #ffffff;
+}
+
+.cart-table th {
+    text-align: left;
+    padding: 15px;
+    background-color: #f8f9fa;
+    color: var(--secondary-color);
+    border-bottom: 2px solid var(--border-color);
+}
+
+.cart-table td {
+    padding: 15px;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--border-color);
+    color: #333333 !important;
+}
+
+.cart-img-preview {
+    width: 100px !important;
+    height: 100px !important;
+    object-fit: cover !important;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    display: block;
+}
+
+.cart-total-section {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: var(--radius);
+}
+
+.cart-total-label {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+}
+
+.cart-total-amount {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-update {
+    padding: 8px 15px;
+    font-size: 1rem;
+    width: auto !important;
+    min-width: 40px;
+}
+
+.btn-remove {
+    background-color: #e74c3c22 !important;
+    color: #e74c3c !important;
+    border: 1px solid #e74c3c44 !important;
+    cursor: pointer;
+}
+
+.btn-remove:hover {
+    background-color: #e74c3c !important;
+    color: white !important;
+}
+
+.empty-cart-msg {
+    text-align: center;
+    padding: 50px;
+    font-size: 1.2rem;
+    color: var(--text-light);
+}
+
+/* PAGINA CHECKOUT */
+.checkout-wrapper {
+    margin: 30px auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    max-width: 1000px;
+}
+
+.checkout-title {
+    font-size: 2rem;
+    color: var(--secondary-color);
+    margin-bottom: 25px;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 10px;
+}
+
+.checkout-content {
+    display: flex;
+    gap: 40px;
+}
+
+.checkout-form-section {
+    flex: 2;
+}
+
+.checkout-summary-section {
+    flex: 1;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.half-width {
+    flex: 1;
+}
+
+.checkout-form input {
+    width: 100%;
+}
+
+.order-summary-card {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border-color);
+}
+
+.summary-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    color: var(--secondary-color);
+    font-size: 1.2rem;
+}
+
+.summary-list {
+    list-style: none;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.summary-item:last-child {
+    border-bottom: none;
+}
+
+/* Responsiveness for Checkout */
+@media (max-width: 768px) {
+    .checkout-content {
+        flex-direction: column-reverse;
+        /* Summary on top or bottom? Usually summary on bottom on mobile or accessed via toggle. Here stacking form on top. */
+        flex-direction: column;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+}
+
+/* PAGINA CONFIRMATION */
+.order-confirmation-wrapper {
+    text-align: center;
+    padding: 60px 20px;
+    background: #fff;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-top: 30px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.confirmation-title {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.confirmation-message {
+    font-size: 1.5rem;
+    color: var(--secondary-color);
+    margin-bottom: 10px;
+}
+
+.order-number {
+    font-size: 1.2rem;
+    color: var(--text-color);
+}
+
+.separator {
+    margin: 30px auto;
+    width: 50%;
+    border: 0;
+    border-top: 1px solid var(--border-color);
+}
+
+/* PAGINA ORDINI (Order History) */
+.orders-wrapper {
+    margin: 30px auto;
+    max-width: 800px;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.orders-title {
+    text-align: center;
+    color: var(--secondary-color);
+    margin-bottom: 30px;
+    font-size: 2rem;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.order-card {
+    background: #fff;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+.order-header {
+    background-color: #f8f9fa;
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order-id {
+    font-weight: bold;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+}
+
+.order-date {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.order-body {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order-items-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.order-items-list li {
+    margin-bottom: 5px;
+    color: var(--text-color);
+}
+
+.item-qty {
+    color: var(--text-light);
+    font-size: 0.9em;
+    margin-left: 5px;
+}
+
+.order-total {
+    font-size: 1.2rem;
+    color: var(--secondary-color);
+    font-weight: bold;
+}
+
+.order-total span {
+    color: var(--primary-color);
+}
+
+.empty-orders-msg,
+.alert-info {
+    text-align: center;
+    padding: 40px;
+    background: #fff;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    color: var(--secondary-color);
+    font-size: 1.2rem;
+}
+
+/* PAGINA PROFILO (Profile) */
+.profile-wrapper {
+    margin: 30px auto;
+    max-width: 600px;
+    background: #fff;
+    padding: 40px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.profile-title {
+    text-align: center;
+    color: var(--secondary-color);
+    margin-bottom: 30px;
+    font-size: 2rem;
+}
+
+.profile-details p {
+    font-size: 1.1rem;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    color: var(--text-color);
+}
+
+.profile-details p strong {
+    color: var(--secondary-color);
+    width: 120px;
+    display: inline-block;
+}
+
+.profile-actions {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.support-info {
+    background-color: #e8f6f3;
+    border: 1px solid #d1f2eb;
+    color: #0e6655;
+    padding: 20px;
+    border-radius: var(--radius);
+    margin-top: 30px;
+    text-align: center;
+}
+
+.support-info a {
+    color: var(--primary-color);
+    font-weight: bold;
+    text-decoration: none;
+}

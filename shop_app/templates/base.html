@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>Tech-Shop</title>
+  <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=1" />
+  <!-- ?v=1 ricarica il css -->
+</head>
+
+<body>
+  <!-- navbar -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="/" class="nav-brand">
+        <img src="{% static 'images/Logo.png' %}" width="60" style="vertical-align: middle; margin-right: 10px"
+          alt="logo" />
+        Tech-Shop
+      </a>
+
+      <form class="search-form" action="/">
+        <input type="search" placeholder="Informazioni prodotto" aria-label="Cerca" name="query" />
+        <button class="btn btn-warning" type="submit">Cerca</button>
+      </form>
+
+      <ul class="nav-menu">
+        <li>
+          <a class="nav-link" href="{% url 'cart' %}">Carrello
+            {% if request.resolver_match.url_name != 'cart' %}
+            <span class="badge {% if cart_total_quantity == 0 %}badge-blue{% endif %}">{{ cart_total_quantity }}</span>
+            {% endif %}
+          </a>
+        </li>
+        {% if user.is_authenticated %}
+        <li>
+          <a class="nav-link" href="{% url 'profile' %}">{{ user.username }}</a>
+          <!-- Simple dropdown logic could be added here in JS or just flat links for now to keep it simple -->
+        </li>
+        <li>
+          <a class="nav-link" href="{% url 'order_list' %}">Ordini</a>
+        </li>
+        <li>
+          <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+        </li>
+        {% else %}
+        <li>
+          <a class="nav-link" href="{% url 'login' %}">Login</a>
+        </li>
+
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    {% block content %}{% endblock %}
+  </main>
+
+  <script src="{% static 'js/main.js' %}"></script>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section about">
+        <h3>Tech-Shop</h3>
+        <p>
+          Il tuo negozio di fiducia per la tecnologia.<br />Offriamo i migliori
+          prodotti...<br />...Ai prezzi più competitivi!
+        </p>
+      </div>
+      <div class="footer-section links">
+        <h3>Link Rapidi</h3>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Prodotti</a></li>
+          <li><a href="#">Carrello</a></li>
+          <li><a href="#">Contatti</a></li>
+        </ul>
+      </div>
+      <div class="footer-section contact">
+        <h3>Contattaci</h3>
+        <p>Email: info@techshop.it</p>
+        <p>Telefono: +39 123 456 789</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2024 Tech-Shop | Designed by Valerio Galfano
+    </div>
+  </footer>
+</body>
+
+</html>
