@@ -36,11 +36,10 @@
         </li>
         {% if user.is_authenticated %}
         <li>
-          <a class="nav-link" href="{% url 'profile' %}">{{ user.username }}</a>
-          <!-- Simple dropdown logic could be added here in JS or just flat links for now to keep it simple -->
+          <a class="nav-link" href="{% url 'order_list' %}">Ordini</a>
         </li>
         <li>
-          <a class="nav-link" href="{% url 'order_list' %}">Ordini</a>
+          <a class="nav-link" href="{% url 'profile' %}">{{ user.username }}</a>
         </li>
         <li>
           <a class="nav-link" href="{% url 'logout' %}">Logout</a>
@@ -90,5 +89,6 @@
     </div>
   </footer>
 </body>
+
 
 </html>
