@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4>Login</h4>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                <!-- Render the form using Bootstrap styling or default -->
+                <div class="form-group">
+                    {{ form.as_p }}
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+            </form>
+            <hr>
+            <div class="text-center mt-3">
+            <br>
+                <p>Non hai un account?</p>
+                <a href="{% url 'register' %}" class="btn btn-success btn-block">Registrati</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

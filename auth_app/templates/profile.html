@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Profilo{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="profile-wrapper">
+        <h2 class="profile-title">Il Mio Profilo</h2>
+
+        <div class="profile-details">
+            <p><strong>Username:</strong> {{ user.username }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            {% if user.first_name %}<p><strong>Nome:</strong> {{ user.first_name }}</p>{% endif %}
+            {% if user.last_name %}<p><strong>Cognome:</strong> {{ user.last_name }}</p>{% endif %}
+        </div>
+
+        <div class="support-info">
+            <p class="mb-0">
+                Vuoi modificare le tue informazioni?
+                <br>
+                Contattaci all'indirizzo: <a href="mailto:support@techshop.it">support@techshop.it</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
