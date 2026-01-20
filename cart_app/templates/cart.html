@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %}Carrello{% endblock %}
+{% block content %}
+{% load static %}
+
+
+<div class="container">
+    <div class="cart-wrapper" data-csrf="{{ csrf_token }}">
+        <h1 class="cart-title">Il Tuo Carrello</h1>
+
+        {% if cart_items %}
+        <table class="cart-table">
+            <thead>
+                <tr>
+                    <th>Immagine</th>
+                    <th>Prodotto</th>
+                    <th>Quantità</th>
+                    <th>Prezzo</th>
+                    <th>Totale</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                <tr id="item-{{ item.id }}">
+                    <td>
+                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="cart-img-preview">
+                    </td>
+                    <td>
+                        <strong>{{ item.product.name }}</strong>
+                    </td>
+                    <td class="quantity">
+                        <div class="quantity-controls">
+                            <span class="quantity-value">{{ item.quantity }}</span>
+                        </div>
+                    </td>
+                    <td>
+                        {{ item.product.price }} €
+                    </td>
+                    <td class="item-total">
+                        {{ item.get_total_price }} €
+                    </td>
+                    <td>
+                        <div class="quantity-controls">
+                            <button class="btn btn-success btn-update" data-id="{{ item.id }}"
+                                data-action="increase">+</button>
+                            <button class="btn btn-warning btn-update" data-id="{{ item.id }}"
+                                data-action="decrease">-</button>
+                            <button class="btn btn-remove btn-update" data-id="{{ item.id }}"
+                                data-action="remove">Rimuovi</button>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="cart-total-section">
+            <span class="cart-total-label">Totale carrello:</span>
+            <span id="cart-total" class="cart-total-amount">{{ total }} €</span>
+            <a href="{% url 'order_create' %}" class="btn btn-primary" style="width: auto; margin-left: 20px;">Procedi
+                all'ordine</a>
+        </div>
+
+        {% else %}
+        <div class="empty-cart-msg">
+            <p>Il tuo carrello è attualmente vuoto.</p>
+            <a href="/" class="btn btn-primary" style="width: auto; margin-top: 20px;">Torna allo Shopping</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<script src="{% static 'js/cart.js' %}"></script>
+
+
+{% endblock %}
