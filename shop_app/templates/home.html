@@ -20,7 +20,7 @@
         <div class="sort-controls">
           <label for="sort-select">Ordina per:</label>
           <select id="sort-select" onchange="location = this.value;">
-            <option>Seleziona ordinamento</option>          
+            <option value="/">Seleziona ordinamento</option>          
             <option
               value="?{% if request.GET.category %}category={{request.GET.category}}&{% endif %}{% if request.GET.query %}query={{request.GET.query}}&{% endif %}sort=name_asc"
               {% if request.GET.sort == 'name_asc' %}selected{% endif %}>Nome (A-Z)</option>
@@ -73,5 +73,6 @@
 
   </div>
 </div>
+
 
 {% endblock %}
