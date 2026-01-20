@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}I Miei Ordini{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="orders-wrapper">
+        <h2 class="orders-title">I Miei Ordini</h2>
+
+        {% if orders %}
+        <div class="orders-list">
+            {% for order in orders %}
+            <div class="order-card">
+                <div class="order-header">
+                    <div class="order-id">
+                        Ordine #{{ order.id }}
+                    </div>
+                    <div class="order-date">
+                        {{ order.created_at|date:"d M Y" }}
+                    </div>
+                </div>
+                <div class="order-body">
+                    <div class="order-items">
+                        <ul class="order-items-list">
+                            {% for item in order.items.all %}
+                            <li>
+                                <span class="item-name">{{ item.product.name }}</span>
+                                <span class="item-qty">x{{ item.quantity }}</span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="order-total">
+                        Totale: <span>€{{ order.get_total_cost }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-orders-msg">
+            <p>Non hai ancora effettuato ordini.</p>
+            <a href="{% url 'home' %}" class="btn btn-primary" style="width: auto; margin-top: 20px;">Inizia lo
+                Shopping</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

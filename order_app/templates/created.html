@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Grazie{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="order-confirmation-wrapper">
+        <h1 class="confirmation-title">Grazie!</h1>
+        <p class="confirmation-message">Il tuo ordine è stato inviato con successo.</p>
+        <p class="order-number">Il tuo numero d'ordine è <strong>{{ order.id }}</strong>.</p>
+        <hr class="separator">
+        <a class="btn btn-primary" href="{% url 'home' %}" style="width: auto; margin-top: 20px;">Continua lo shopping</a>
+    </div>
+</div>
+{% endblock %}
