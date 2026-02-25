@@ -34,15 +34,23 @@ Cliccando su uno dei prodotti nella home, si viene reindirizzati alla pagina di 
 - HTML / CSS
 - Javascript
 - SQLite
+### Tecnologie adottate per la sicurezza:
+**In questo progetto ho dato particolare importanza alla sicurezza dei dati sensibili:**
+* **Gestione Variabili d'Ambiente:** Le informazioni critiche come la `SECRET_KEY` di Django e le configurazioni di `DEBUG` non sono caricate nel codice sorgente.
+* **Integrazione Python-Dotenv:** Il progetto utilizza la libreria `python-dotenv` per caricare le configurazioni da un file `.env` locale, che viene escluso dal controllo di versione tramite `.gitignore`.
 
 ## Installazione
 1. Clonare o scaricare la repository
 2. Creare un ambiente virtuale
 3. Installare le dipendenze:
    pip install -r requirements.txt
+4. Configura le variabili d'ambiente: <br>
+modifica il file '.env.example' oppure crea un file '.env' nella root del progetto e aggiungi: <br>
+SECRET_KEY=tua_chiave_segreta (da generare) <br>
+DEBUG=True
 5. Eseguire le migrazioni:
    python manage.py migrate
-7. Avviare il server:
+6. Avviare il server:
    python manage.py runserver
 
 ## Funzionalità implementate
